@@ -48,26 +48,25 @@ def get_interval(encode_string):
     d = OrderedDict(get_binary_dict(encode_string))
     for count, i in enumerate(encode_string):
         if count == 0:
-            lower, upper = get_bounds(d, i, lower = None, upper = None, )
+            lower, upper = get_bounds(d, i, lower = None, upper = None)
         else:
             lower, upper = get_bounds(d, i, lower = lower, upper = upper)
     return lower, upper
 
-def get_compression(encode_string, l_bound = 0, u_bound = 1, out = []):
+def get_compression(encode_string, l_bound = 0, u_bound = 1, out = [], i = 1):
     grammar = get_binary_dict(encode_string)
-    lower, upper = get_interval(grammar, encode_string)
-    i = 1
-    print(out)
+    lower, upper = get_interval(encode_string)
+    print(out, lower, upper, l_bound, u_bound)
     if lower > get_binary_expansion(i):
         out.append(1)
         l_bound = get_binary_expansion(i)
         i += 1
-        get_compression(grammar, encode_string, l_bound = l_bound, u_bound = u_bound, out = out)
+        get_compression(encode_string, l_bound = l_bound, u_bound = u_bound, out = out, i = i)
     else:
         out.append(0)
         u_bound = get_binary_expansion(i)
         i += 1
-        get_compression(grammar, encode_string, l_bound = l_bound, u_bound = u_bound, out = out)
+        get_compression(encode_string, l_bound = l_bound, u_bound = u_bound, out = out, i = i)
 
 
 #def decompress(binary_string):
