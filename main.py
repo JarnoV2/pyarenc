@@ -44,8 +44,8 @@ def get_bounds(d, symbol, lower = None, upper = None):
         pass
     return lower, upper
 
-def get_interval(grammar, encode_string):
-    d = OrderedDict(get_binary_dict(grammar))
+def get_interval(encode_string):
+    d = OrderedDict(get_binary_dict(encode_string))
     for count, i in enumerate(encode_string):
         if count == 0:
             lower, upper = get_bounds(d, i, lower = None, upper = None, )
@@ -53,7 +53,8 @@ def get_interval(grammar, encode_string):
             lower, upper = get_bounds(d, i, lower = lower, upper = upper)
     return lower, upper
 
-def get_compression(grammar, encode_string, l_bound = 0, u_bound = 1, out = []):
+def get_compression(encode_string, l_bound = 0, u_bound = 1, out = []):
+    grammar = get_binary_dict(encode_string)
     lower, upper = get_interval(grammar, encode_string)
     i = 1
     print(out)
